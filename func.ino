@@ -1,10 +1,11 @@
 void temp_init()
 {
-  sensors.begin(); 
+  sensors.begin();
   Serial.print(F("Locating devices..."));
   Serial.print(F("Found "));
   deviceCount = sensors.getDeviceCount();
-  if (deviceCount > 4) deviceCount = 4;
+  if (deviceCount > 4)
+    deviceCount = 4;
   Serial.print(deviceCount, DEC);
   Serial.println(F(" devices."));
 }
@@ -12,7 +13,7 @@ void temp_init()
 void readTemp()
 {
   sensors.requestTemperatures();
-  for (int i = 0;  i < deviceCount;  i++)
+  for (int i = 0; i < deviceCount; i++)
   {
     temp[i] = sensors.getTempCByIndex(i);
     //Serial.print((char)176);
@@ -22,7 +23,7 @@ void readTemp()
 
 void fillZero()
 {
-  for (int i = 0; i < arlen ; i++)
+  for (int i = 0; i < arlen; i++)
   {
     sen1[i] = 0;
     sen2[i] = 0;
@@ -33,17 +34,27 @@ void fillZero()
 
 void updateArrays()
 {
-  for (int i = 0; i < (arlen - 1) ; i++)
+  if (mx >= arlen)
   {
-    sen1[i] = sen1[i + 1];
-    sen2[i] = sen2[i + 1];
-    sen3[i] = sen3[i + 1];
-    sen4[i] = sen4[i + 1];
+    for (int i = 0; i < (arlen - 1); i++)
+    {
+      sen1[i] = sen1[i + 1];
+      sen2[i] = sen2[i + 1];
+      sen3[i] = sen3[i + 1];
+      sen4[i] = sen4[i + 1];
+    }
+    sen1[arlen - 1] = temp[0];
+    sen2[arlen - 1] = temp[1];
+    sen3[arlen - 1] = temp[2];
+    sen4[arlen - 1] = temp[3];
   }
-  sen1[arlen - 1] = temp[0];
-  sen2[arlen - 1] = temp[1];
-  sen3[arlen - 1] = temp[2];
-  sen4[arlen - 1] = temp[3];
+  else 
+  {
+    sen1[mx] = temp[0];
+    sen2[mx] = temp[1];
+    sen3[mx] = temp[2];
+    sen4[mx] = temp[3];
+  }
 }
 void update_temp()
 {
@@ -51,17 +62,18 @@ void update_temp()
   {
     tim_temp = millis();
     readTemp();
-  }
-
-  if (millis() - tim_disp > 60000L)
-  {
-    tim_disp = millis();
     updateArrays();
   }
+
+  // if (millis() - tim_disp > 60000L)
+  // {
+  //   tim_disp = millis();
+  //   updateArrays();
+  // }
 }
 void parray()
 {
-  for (int i = 0; i < arlen ; i++)
+  for (int i = 0; i < arlen; i++)
   {
     Serial.print(sen1[i]);
     Serial.print(",");

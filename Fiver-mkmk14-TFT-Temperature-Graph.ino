@@ -80,6 +80,7 @@ int screen = scr_main;
 bool dr = true;
 int x, y;
 
+int mx = 0;
 
 byte sen1[arlen];
 byte sen2[arlen];
