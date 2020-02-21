@@ -111,6 +111,7 @@ void checkMainButton()
         screen = scr_lu;
         drawBackButton();
         Serial.println("Left up sensor is pressed for graph");
+        mx = 0;
         delay(100);
       }
 
@@ -119,6 +120,7 @@ void checkMainButton()
         screen = scr_ru;
         drawBackButton();
         Serial.println("Right up sensor is pressed for graph");
+        mx = 0;
         delay(100);
       }
 
@@ -127,6 +129,7 @@ void checkMainButton()
         screen = scr_ld;
         drawBackButton();
         Serial.println("left down sensor is pressed for graph");
+        mx = 0;
         delay(100);
       }
 
@@ -135,6 +138,7 @@ void checkMainButton()
         screen = scr_rd;
         drawBackButton();
         Serial.println("Right down sensor is pressed for graph");
+        mx = 0;
         delay(100);
       }
     }
